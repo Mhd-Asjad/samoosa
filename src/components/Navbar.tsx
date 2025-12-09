@@ -14,10 +14,10 @@ export default function Navbar() {
           
           {/* Logo */}
           <Link href="#home" className="flex items-center gap-2 z-50 relative">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-orange-500 to-yellow-500 flex items-center justify-center">
-              <Triangle className="text-white w-4 h-4 fill-white/20" />
-            </div>
-            <span className="text-xl font-semibold text-white tracking-tight translate-y-1 font-geist">malabar leaves</span>
+            {/* <div className="w-8 h-8 rounded-full flex items-center justify-center"> */}
+              
+              <img src="/logo1.png" alt="Logo" className="w-28 h-auto object-contain" />            
+            {/* </div> */}
           </Link>
 
           {/* Desktop Navigation */}

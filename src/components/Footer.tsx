@@ -9,11 +9,9 @@ export default function Footer() {
                 <div className="text-center md:text-left">
                     
                     <Link href="#home" className="flex items-center justify-center md:justify-start gap-2 mb-3">
-                        <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-orange-500 to-yellow-500 flex items-center justify-center">
-                            <Triangle className="text-white w-3 h-3 fill-white/20" />
-                        </div>
-                        <span className="text-lg font-semibold text-white tracking-tight">malabar leaves</span>
+                        <img src="/logo1.png" alt="Logo" className="w-24 h-auto object-contain" />            
                     </Link>
+                        <span className="text-lg font-semibold text-white tracking-tight">malabar leaves</span>
 
                     <p className="text-sm text-zinc-500">Preserving the crunch of tradition.</p>
                 </div>

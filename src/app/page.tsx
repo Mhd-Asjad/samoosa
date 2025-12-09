@@ -3,25 +3,30 @@ import Image from "next/image";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import MapSection from "../components/MapSection";
-import { Asterisk, Sparkle, ArrowRight, Play, Star, Pause } from "lucide-react";
-import React, {useState, useRef} from "react";
+import { Asterisk, Sparkle, ArrowRight, Volume2, VolumeX, CheckCircle2, Star } from "lucide-react";
+import {useState, useRef, useEffect} from "react";
 
 export default function Home() {
 
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  
+const videoRef = useRef<HTMLVideoElement>(null);
+    const [isMuted, setIsMuted] = useState(true);
 
-  const handlePlayPause = () => {
+    // Toggle Mute Function
+    const toggleMute = () => {
         if (videoRef.current) {
-            if (isPlaying) {
-                videoRef.current.pause();
-            } else {
-                videoRef.current.play();
-            }
-            setIsPlaying(!isPlaying);
+            videoRef.current.muted = !videoRef.current.muted;
+            setIsMuted(videoRef.current.muted);
         }
-  };
+    };
+
+    // Ensure autoplay works reliably on mount
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.play().catch(error => {
+                console.log("Autoplay prevented:", error);
+            });
+        }
+    }, []);
 
   return (
     <main className="min-h-screen overflow-x-hidden selection:bg-orange-500/30 selection:text-orange-200 relative">
@@ -97,78 +102,92 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-        </div>
-
-        {/* Component: Video Section */}
-        <section className="w-full mb-24 relative group px-4 md:px-6" id="craft">
-
-            <div className="p-7">
-                <span className="text-orange-400 font-geist text-lg text-center tracking-widest uppercase mb-2 block">Our Craft</span>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl text-center text-white font-semibold tracking-tight leading-tight">
-                The work culture behind every crispy bite
-                </h2>
-            </div>
-
-            <div className="max-w-5xl mx-auto">    
+        </div  >
 
 
-                <div className="glass-card rounded-[2rem] p-3 overflow-hidden border border-white/10 relative">
-                    {/* Aspect Ratio Wrapper:
-                    aspect-video (16:9) for mobile
-                    md:aspect-[21/9] for ultrawide cinematic look on desktop
-                    */}
-                    <div className="relative w-full aspect-video rounded-[2rem] overflow-hidden bg-zinc-900">                        
-                        <video 
-                            ref={videoRef}
-                            src="/video/flower_sweets.mp4" // Ensure this file exists in public/video/
-                            className={`w-full h-full object-cover transition-all duration-1000 ease-out
-                                ${isPlaying ? 'opacity-100 scale-100' : 'opacity-80 group-hover:scale-105'}
-                            `}
-                            loop
-                            playsInline
-                            // Optional: Add poster="/assets/samoosa2.jpeg" here for a loading image
-                        />
+        <section className="w-full py-24 px-6 relative" id="crafts">
+            <div className="max-w-7xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    
+                    <div className="order-2 lg:order-1">
+                        <span className="text-orange-400 font-geist text-sm tracking-widest uppercase mb-3 block">
+                        </span>
+                        <h2 className="text-4xl md:text-5xl text-white font-albertus-style tracking-wide mb-6 leading-tight">
+                            The Work Culture behind, <br/>
+                            <span className="text-zinc-500">every crispy bite.</span>
+                        </h2>
+                        <p className="text-zinc-400 font-geist leading-relaxed mb-8 text-lg">
+                            Our kitchen isn't just a production unit; it's a family where tradition meets precision. 
+                            We believe that the energy put into making food is tasted in the final bite. 
+                            That's why every sheet is handled with care, respect, and a smile.
+                        </p>
 
-                        {/* Dark Overlay: Fades out slightly when playing */}
-                        <div className={`absolute inset-0 transition-colors duration-500 pointer-events-none 
-                            ${isPlaying ? 'bg-black/20' : 'bg-black/40 group-hover:bg-black/30'}`} 
-                        ></div>
-
-                        {/* Play Button Container */}
-                        <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300
-                            ${isPlaying ? 'opacity-0 hover:opacity-100' : 'opacity-100'}
-                        `}>
-                            <button 
-                                onClick={handlePlayPause}
-                                className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md border border-white/30 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-white/20 active:scale-95"
-                            >
-                                {isPlaying ? (
-                                    <Pause className="w-8 h-8 text-white fill-white ml-1" />
-                                ) : (
-                                    <Play className="w-8 h-8 text-white fill-white ml-1" />
-                                )}
-                            </button>
-                        </div>
-
-                        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 glass-overlay pointer-events-none">
-                            <div className="flex flex-col md:flex-row md:items-end justify-end">
-                            
-                                <div className="md:text-right max-w-xs">
-                                    <p className="text-zinc-300 font-geist text-sm leading-relaxed">
-                                        Watch how we layer thirty years of tradition into every single sheet.
-                                    </p>
+                        <div className="space-y-4 font-geist">
+                            <div className="flex items-center gap-4 group">
+                                <div className="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center group-hover:bg-orange-500/20 transition-colors">
+                                    <CheckCircle2 className="w-5 h-5 text-orange-500" />
                                 </div>
+                                <span className="text-zinc-300">Hygiene-first sterile environment</span>
+                            </div>
+                            <div className="flex items-center gap-4 group">
+                                <div className="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center group-hover:bg-orange-500/20 transition-colors">
+                                    <CheckCircle2 className="w-5 h-5 text-orange-500" />
+                                </div>
+                                <span className="text-zinc-300">Fair trade & locally sourced ingredients</span>
+                            </div>
+                            <div className="flex items-center gap-4 group">
+                                <div className="w-10 h-10 rounded-full bg-orange-500/10 flex items-center justify-center group-hover:bg-orange-500/20 transition-colors">
+                                    <CheckCircle2 className="w-5 h-5 text-orange-500" />
+                                </div>
+                                <span className="text-zinc-300">Master chefs with 20+ years experience</span>
                             </div>
                         </div>
                     </div>
+
+                    {/* RIGHT SIDE: Video Section (Matches your CSS requirements) */}
+                    <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+                        
+                        {/* Container .about-video */}
+                        <div className="relative w-[90%] lg:w-full max-w-md">
+                            
+                            {/* Wrapper .video-wrapper (Aspect Ratio 4/5) */}
+                            <div className="relative rounded-[20px] overflow-hidden aspect-[4/5] shadow-2xl border border-white/10 group">
+                                
+                                <video 
+                                    ref={videoRef}
+                                    id="aboutVideo"
+                                    className="w-full h-full object-cover block"
+                                    autoPlay 
+                                    muted 
+                                    loop 
+                                    playsInline
+                                    src="/video/flower_sweets.mp4" 
+                                />
+
+                                {/* Mute Button .mute-btn */}
+                                <button 
+                                    onClick={toggleMute}
+                                    className="absolute top-5 right-5 w-[45px] h-[45px] bg-orange-500 text-white border-none rounded-full flex justify-center items-center z-10 transition-all duration-300 shadow-[0_4px_15px_rgba(0,0,0,0.2)] hover:scale-110 hover:bg-white hover:text-orange-500 cursor-pointer"
+                                >
+                                    {isMuted ? (
+                                        <VolumeX className="w-5 h-5" /> // Muted Icon
+                                    ) : (
+                                        <Volume2 className="w-5 h-5" /> // Sound On Icon
+                                    )}
+                                </button>
+                                
+                                {/* Optional: Dark gradient at bottom to make video blend better */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 pointer-events-none"></div>
+                            </div>
+
+                            {/* Decorative element behind video */}
+                            <div className="absolute -z-10 top-10 -right-10 w-full h-full border border-dashed border-white/10 rounded-[20px] translate-x-4 translate-y-4"></div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            
-            {/* Background Glow Effects */}
-            <div className="absolute -top-6 -right-6 w-24 h-24 bg-orange-500/20 rounded-full blur-2xl pointer-events-none"></div>
-            <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        </section>
-        {/* Component: Stats Grid */}
+        </section>        {/* Component: Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24" id="products">
             <div className="glass-card rounded-[2rem] p-8 flex flex-col justify-center space-y-8 hover:bg-white/5 transition-colors group">
                 <div>
