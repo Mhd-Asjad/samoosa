@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+}
+
+/* Font Assignments */
+body { font-family: var(--font-inter); }
+h1, h2, h3, .font-albertus-style { font-family: var(--font-cinzel); }
+
+/* Custom Utilities */
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.glass-overlay {
+     background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(9, 9, 11, 0.8) 100%);
+}
+
+.map-filter {
+    filter: grayscale(100%) invert(92%) contrast(83%);
+    mix-blend-mode: luminosity;
+}
+
+/* Animations */
+@keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+    animation: spin-slow 10s linear infinite;
+}
